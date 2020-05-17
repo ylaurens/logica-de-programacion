@@ -1,61 +1,70 @@
+ 
 <?php
-	//Accion del boton calcular
-	if(isset($_POST['calcular'])){
-		$dato =$_POST['dato'];
-		//transformo el valor a numero
-		$numero = (int)$dato;
-		//Si $numero = 0, entonces el dato es un string
-		if (0 === $numero){
-			//separamos el string que tienen _ y luego los unimos sin el caracter
-			$espaciado= explode("_",$dato);
-			$espaciado= implode("",$espaciado);
-			echo"<br> Valor de Dato  sin _: $espaciado ";
-			//separamos el string que tienen espacion y luego los unimos sin el caracter
-			$espaciado= explode(" ",$espaciado);
-			$espaciado= implode("",$espaciado);
-			echo"<br> Valor de Dato  sin espacios: $espaciado ";
 
-			//separamos el string que tiene -
-			$espaciado= explode("-",$espaciado);
-			//buscamos y añadimos mayuscula a la palabra que esta luego de -
-			$j=count($espaciado);
-			for ($i=1; $i<$j; $i++){
-				$espaciado[$i]= ucfirst($espaciado[$i]);
-			}
-			//lo volvmos a convertir en un string
-			$espaciado= implode("",$espaciado);
-			echo"<br> Valor de Dato  sin - y mayuscula: $espaciado";
-			//separo cada palabra
-			$reversa= explode(" ",$dato);
-			$j=count($reversa);
-			for ($i=0; $i<$j; $i++){
-				//$espaciado[$i]= ucfirst($espaciado[$i]);
-				if( 5<=(strlen($reversa[$i]))){
-					$reversa[$i]= strrev($reversa[$i]);
-				}
-			}
-			$reversa= implode(" ",$reversa);
-					
-			echo"<br> Esta fue el resultado 1 : $espaciado";
-			echo"<br> Valor de Dato  en reversa $reversa";
-		}// fin de caso si es cadena
-		// si no, es un numero y buscamos los multiplos de 3 y de 5
-		for ($i =1; $i<$numero ; $i++){
-			if ($i%3==0){
-				$mult[$i] = $i;
-				$mult[0] = $mult[0] + $i;
+$dato =$_POST['dato'];
+$result= generar($dato);
+echo "El resultado es $result";
 
-				echo"<br> $mult[$i] <br>";
-			}
-			if($i%5==0){
-				$mult[$i] = $i;
-				echo"<br> $mult[$i] <br>";
-				$mult[0] = $mult[0] + $i;
-			}
+function generar($dato){
+	if (isset($_POST['guion'])){
+		//separamos el string que tienen _ y luego los unimos sin el caracter
+		$espaciado= explode("_",$dato);
+		$espaciado= implode("",$espaciado);
+		//echo"<br> Valor de Dato  sin _: $espaciado ";
+		//separamos el string que tienen espacion y luego los unimos sin el caracter
+		$espaciado= explode(" ",$espaciado);
+		$espaciado= implode("",$espaciado);
+		//echo"<br> Valor de Dato  sin espacios: $espaciado ";
 
+		//separamos el string que tiene -
+		$espaciado= explode("-",$espaciado);
+		//buscamos y añadimos mayuscula a la palabra que esta luego de -
+		$j=count($espaciado);
+		for ($i=1; $i<$j; $i++){
+			$espaciado[$i]= ucfirst($espaciado[$i]);
 		}
+		//lo volvemos a convertir en un string
+		$espaciado= implode("",$espaciado);
+		//echo"<br> Valor de Dato  sin - y mayuscula: $espaciado";
+		
+	 	return ($espaciado);
+	}//fin de if quitar caracteres	
 
-		echo"<br> La sumatoria y Los multiplos del numero son $mult[0]";
+	if(isset($_POST['reversa'])){
+		echo "entro en la opcion reversa<br>";
+		//separo cada palabra
+		$reversa= explode(" ",$dato);
+		$j=count($reversa);
+		for ($i=0; $i<$j; $i++){
+			//$espaciado[$i]= ucfirst($espaciado[$i]);
+			if( 5<=(strlen($reversa[$i]))){
+				$reversa[$i]= strrev($reversa[$i]);
+			}
+		}
+		$reversa= implode(" ",$reversa);
+		return ($reversa);
+	}// fin de caso si es cadena opcion reversa
 
-	}//fin accion boton calcular	
+	if(isset($_POST['multiplo'])){
+		//se convierte el string en numero
+		$numero = (int)$dato;
+		$mult = array();
+		$sum = 0;
+		for ($i=1; $i<$numero ; $i++){
+			//si es multiplo de 3
+			if ($i%3==0){
+				$sum = $sum + $i;
+				$mult[$i] = $i;
+			}
+			//si es multiplo de 5
+			if($i%5==0){
+				$sum = $sum + $i;
+				$mult[$i] = $i;
+			}
+		}
+		$mult[$i+1]=$sum; 
+		$mult= implode(" ",$mult);
+		return ($mult);
+	}	
+}//Fin de la funcion generar
 ?>
