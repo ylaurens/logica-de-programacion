@@ -1,0 +1,29 @@
+1.	La salida del programa es: $z = ‘21’; $h=’21’;
+//$z es una variable string a la que se le asignó valor 1
+$z = ‘1’;
+//Asignación por referencia
+$h = &$z;
+// Asignación a las variables $h y a $z el valor de string 21
+$h = “2$h”; 
+
+2.	var_dump muestra información de tipo y valor sobre una o mas expresiones
+//se compara el número 0145 con 145 y retorna bool false
+var_dump (0145 == 145);	
+//se compara el string 0145 con el número 145 y luego de la manipulación de tipos  y como resultan iguales retorna bool true
+var_dump (‘0145’ == 145);
+//En estos dos casos compara si son idénticos y como no lo son retorna bool  false
+var_dump (‘0145’ === 145);
+var_dump (‘0145’ === 146);
+
+3.	// La variable $text es string con valor Juan
+$text =’Juan’; 
+//El carácter i=10 se le asigna Perez, pero siendo solo un espacio solo se añade la P
+$text[10] =’Perez’;
+
+4.	La salida es un error por el valor numérico de $a = $a + 1; porque el string no tiene ese operador con números
+// $a es una variable tipo string y con valor 3j3mpl0
+$a = "3j3mpl0";
+// las variables string no tienen un operador + con números
+$a = $a + 1;
+// si no existiera el error mostraría el valor de a
+echo $a;
